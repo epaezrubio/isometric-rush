@@ -1,0 +1,76 @@
+{
+    "name": "Input Actions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "f8c10c79-6e13-42d7-aeba-1ec00cdc17e5",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Value",
+                    "id": "d6570f22-ba2d-4619-9a41-343ce6ec4baf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap(duration=0.5),SlowTap",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Add Checkpoint",
+                    "type": "Button",
+                    "id": "d088ed1f-aeeb-458b-be49-0c96ecb9abb1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "09d60b9c-d498-4a3b-8992-82a9f8692ed9",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17bfbbbf-c1be-44cb-8284-f88e628aaa35",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07cd33b8-f880-4b6a-b495-4f43adefc9ab",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Add Checkpoint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2fa443e-7d6a-488f-82be-a396d5b69768",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Add Checkpoint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
