@@ -8,6 +8,9 @@ namespace IsoRush.Level
 {
     public class LevelScroller : MonoBehaviour
     {
+        // TODO: Replace with DI instance
+        public static LevelScroller instance;
+        
         [SerializeField]
         [Min(1)]
         private float _length = 20;
@@ -18,7 +21,7 @@ namespace IsoRush.Level
 
         [SerializeField]
         [Min(0)]
-        private float _scroll = 0;
+        public float Scroll = 0;
 
         [SerializeField]
         private float _scrollSpeed = 10f;
@@ -28,6 +31,11 @@ namespace IsoRush.Level
 
         private List<LevelChunk> _scrollElements = new List<LevelChunk>();
 
+        void Awake()
+        {
+            instance = this;
+        }
+
         void Start()
         {
             _scrollElements.Clear();
@@ -36,7 +44,7 @@ namespace IsoRush.Level
             {
                 LevelChunk instance = Instantiate(_chunkPrefab, transform);
                 instance.regularIndex = i;
-                instance.index = i;
+                instance.index.Value = i;
 
                 _scrollElements.Add(instance);
             }
@@ -44,21 +52,20 @@ namespace IsoRush.Level
 
         void Update()
         {
-            _scroll+= Time.deltaTime * _scrollSpeed;
+            Scroll+= Time.deltaTime * _scrollSpeed;
 
             int elementsCount = _scrollElements.Count;
-            int scrollIndex = (int)(_scroll / _gridSize);
+            int scrollIndex = (int)(Scroll / _gridSize);
 
             for (int i = 0; i < elementsCount; i++)
             {
                 LevelChunk element = _scrollElements[i];
 
                 int scrollLoops = (scrollIndex - element.regularIndex) / elementsCount;
-
-                element.index = scrollLoops * elementsCount + element.regularIndex;
+                element.index.Value = scrollLoops * elementsCount + element.regularIndex;
 
                 float offsetScroll =
-                    (scrollIndex - element.index) * _gridSize + _scroll % _gridSize;
+                    (scrollIndex - element.index.Value) * _gridSize + Scroll % _gridSize;
 
                 element.transform.localPosition = new Vector3(
                     offsetScroll - _length * 0.5f,
@@ -91,7 +98,7 @@ namespace IsoRush.Level
                 transform.position + new Vector3(_length * 0.5f, 0, -width * 0.5f)
             );
 
-            float offset = _scroll % _gridSize;
+            float offset = Scroll % _gridSize;
             float start = -_length / _gridSize / 2 + offset;
             float end = _length / _gridSize / 2 + offset;
 

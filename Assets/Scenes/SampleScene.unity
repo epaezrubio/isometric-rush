@@ -272,9 +272,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _length: 40
   _gridSize: 1
-  _scroll: 2.54
+  Scroll: 0
   _scrollSpeed: 10
-  _chunkPrefab: {fileID: 5588427770493829742, guid: 227803c28c5241042a05c46aecc60ef8,
+  _chunkPrefab: {fileID: 3857810959554506893, guid: 227803c28c5241042a05c46aecc60ef8,
     type: 3}
 --- !u!4 &611688668
 Transform:
@@ -284,7 +284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611688666}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -352,11 +352,12 @@ GameObject:
   - component: {fileID: 1629527980}
   - component: {fileID: 1629527979}
   - component: {fileID: 1629527978}
+  - component: {fileID: 1629527984}
   - component: {fileID: 1629527982}
   - component: {fileID: 1629527983}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -477,6 +478,33 @@ MonoBehaviour:
   _jumpRotation: 90
   _superJumpHeight: 6
   _superJumpRotation: 90
+--- !u!54 &1629527984
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629527977}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &9198686402083720945
 PrefabInstance:
   m_ObjectHideFlags: 0

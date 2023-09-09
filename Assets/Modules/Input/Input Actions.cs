@@ -35,7 +35,7 @@ namespace IsoRush.Input
                     ""id"": ""d6570f22-ba2d-4619-9a41-343ce6ec4baf"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap(duration=0.5),SlowTap"",
+                    ""interactions"": ""Tap(duration=0.4),SlowTap(duration=0.4)"",
                     ""initialStateCheck"": true
                 },
                 {
@@ -64,6 +64,17 @@ namespace IsoRush.Input
                     ""name"": """",
                     ""id"": ""17bfbbbf-c1be-44cb-8284-f88e628aaa35"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56d25c81-d266-4cc9-8707-25e313caf0ce"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

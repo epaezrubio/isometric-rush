@@ -19,8 +19,6 @@ namespace IsoRush.Player
         [SerializeField]
         private float _superJumpRotation = 90f;
 
-        private float _rotation = 0;
-
         [MenuItem("Jump")]
         public async Task Jump()
         {
