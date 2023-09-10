@@ -10,6 +10,7 @@ namespace IsoRush.Level
         [Inject]
         private GameState _gameState;
 
+        [Header("Grid")]
         [SerializeField]
         [Min(1)]
         private float _length = 20;
@@ -18,8 +19,12 @@ namespace IsoRush.Level
         [Min(0.1f)]
         private float _gridSize = 1;
 
+        [Header("Chunks")]
         [SerializeField]
         private LevelChunk _chunkPrefab;
+
+        [SerializeField]
+        private Transform _chunksParent;
 
         private List<LevelChunk> _scrollElements = new List<LevelChunk>();
 
@@ -29,7 +34,7 @@ namespace IsoRush.Level
 
             for (int i = 0; i < _length / _gridSize; i++)
             {
-                LevelChunk instance = Instantiate(_chunkPrefab, transform);
+                LevelChunk instance = Instantiate(_chunkPrefab, _chunksParent);
                 instance.regularIndex = i;
                 instance.index.Value = i;
 

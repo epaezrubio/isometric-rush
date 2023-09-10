@@ -1,3 +1,4 @@
+using System.Linq;
 using FSM;
 using IsoRush.Player;
 using IsoRush.Utils;
@@ -38,23 +39,43 @@ namespace IsoRush.State
 
             AddState(
                 GameStateStates.RestoringCheckpoint,
-                new State<string>(onLogic: state =>
+                new State<string>(onEnter: state =>
                 {
-                    Debug.Log("Restoring Checkpoint");
+                    var checkpoint = _gameState.Checkpoints.Last();
+                    _gameState.GameTime.Value = checkpoint;
+
+                     _gameState.Checkpoints.Remove(checkpoint);
+
+                    Trigger(GameStateEvents.OnResumeFromCheckpoint);
                 })
             );
 
             AddState(
                 GameStateStates.GameOver,
-                new State<string>(onLogic: state =>
+                new State<string>(onEnter: state =>
                 {
-                    Debug.Log("GameOver");
+                    Debug.Log("Game Over");
+                })
+            );
+
+
+            AddTriggerTransition(
+                GameStateEvents.OnGameOverTrigger,
+                new Transition(GameStateStates.Gameplay, GameStateStates.GameOver, _ => {
+                    return _gameState.Checkpoints.Count == 0;
                 })
             );
 
             AddTriggerTransition(
                 GameStateEvents.OnGameOverTrigger,
-                new TransitionBase<string>(GameStateStates.Gameplay, GameStateStates.GameOver)
+                new Transition(GameStateStates.Gameplay, GameStateStates.RestoringCheckpoint, _ => {
+                    return _gameState.Checkpoints.Count > 0;
+                })
+            );
+
+            AddTriggerTransition(
+                GameStateEvents.OnResumeFromCheckpoint,
+                new Transition(GameStateStates.RestoringCheckpoint, GameStateStates.Gameplay)
             );
 
             SetStartState(GameStateStates.Gameplay);

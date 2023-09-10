@@ -11,6 +11,8 @@ namespace IsoRush.State
 
         public ReactiveProperty<int> ScrollSpeed = new ReactiveProperty<int>(10);
 
+        public ReactiveProperty<int> InventoryCheckpoints = new ReactiveProperty<int>(5);
+
         public ReactiveCollection<int> Checkpoints = new ReactiveCollection<int>();
     }
 }
