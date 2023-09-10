@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
 using IsoRush.Input;
+using IsoRush.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
+using VContainer;
 using static UnityEngine.InputSystem.InputAction;
 
 namespace IsoRush.Player
@@ -40,13 +42,19 @@ namespace IsoRush.Player
             }
         }
 
-        void OnEnable()
+        public void EnableControls()
         {
             jumpAction.action.Enable();
             jumpAction.action.performed += OnJumpPressed;
         }
 
-        void OnDisable()
+        public void DisableControls()
+        {
+            jumpAction.action.Disable();
+            jumpAction.action.performed -= OnJumpPressed;
+        }
+
+        void OnDestroy()
         {
             jumpAction.action.Disable();
             jumpAction.action.performed -= OnJumpPressed;
