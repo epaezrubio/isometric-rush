@@ -19,7 +19,6 @@ namespace IsoRush.Player
         [SerializeField]
         private float _superJumpRotation = 90f;
 
-        [MenuItem("Jump")]
         public async Task Jump()
         {
             var jumpTween = transform.DOJump(transform.position, _jumpHeight, 1, 0.6f);
@@ -34,7 +33,6 @@ namespace IsoRush.Player
             );
         }
 
-        [MenuItem("SuperJump")]
         public async Task SuperJump()
         {
             var jumpTween = transform.DOJump(transform.position, _superJumpHeight, 1, 1f);
