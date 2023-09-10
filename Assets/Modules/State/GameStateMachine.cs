@@ -44,7 +44,7 @@ namespace IsoRush.State
                     var checkpoint = _gameState.Checkpoints.Last();
                     _gameState.GameTime.Value = checkpoint;
 
-                     _gameState.Checkpoints.Remove(checkpoint);
+                    _gameState.Checkpoints.Remove(checkpoint);
 
                     Trigger(GameStateEvents.OnResumeFromCheckpoint);
                 })
@@ -58,19 +58,28 @@ namespace IsoRush.State
                 })
             );
 
-
             AddTriggerTransition(
                 GameStateEvents.OnGameOverTrigger,
-                new Transition(GameStateStates.Gameplay, GameStateStates.GameOver, _ => {
-                    return _gameState.Checkpoints.Count == 0;
-                })
+                new Transition(
+                    GameStateStates.Gameplay,
+                    GameStateStates.GameOver,
+                    _ =>
+                    {
+                        return _gameState.Checkpoints.Count == 0;
+                    }
+                )
             );
 
             AddTriggerTransition(
                 GameStateEvents.OnGameOverTrigger,
-                new Transition(GameStateStates.Gameplay, GameStateStates.RestoringCheckpoint, _ => {
-                    return _gameState.Checkpoints.Count > 0;
-                })
+                new Transition(
+                    GameStateStates.Gameplay,
+                    GameStateStates.RestoringCheckpoint,
+                    _ =>
+                    {
+                        return _gameState.Checkpoints.Count > 0;
+                    }
+                )
             );
 
             AddTriggerTransition(

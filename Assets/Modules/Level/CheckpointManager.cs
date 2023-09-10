@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using IsoRush.State;
 using UniRx;
 using UnityEngine;
@@ -10,35 +12,44 @@ namespace IsoRush.Level
         [Inject]
         private GameState _gameState;
 
+        [SerializeField]
+        private Checkpoint _checkpointPrefab;
+
+        private Dictionary<int, Checkpoint> _checkpointsDict = new Dictionary<int, Checkpoint>();
+
         void Start()
         {
             _gameState.Checkpoints
                 .ObserveAdd()
-                .Subscribe(
-                    checkpoint =>
-                    {
-                        SpawnCheckpoint(checkpoint.Value);
-                    }
-                )
+                .Subscribe(checkpoint =>
+                {
+                    _ = SpawnCheckpoint(checkpoint.Value);
+                })
                 .AddTo(this);
 
             _gameState.Checkpoints
                 .ObserveRemove()
-                .Subscribe(
-                    checkpoint =>
-                    {
-                        DespawnCheckpoint(checkpoint.Value);
-                    }
-                )
+                .Subscribe(checkpoint =>
+                {
+                    _ = DespawnCheckpoint(checkpoint.Value);
+                })
                 .AddTo(this);
         }
 
-        private void SpawnCheckpoint(int gameTime) {
-            Debug.Log($"New checkpoint at {gameTime}");
+        private async Task SpawnCheckpoint(int gameTime)
+        {
+            Checkpoint checkpoint = Instantiate(_checkpointPrefab, transform);
+            await checkpoint.Spawn();
+
+            _checkpointsDict[gameTime] = checkpoint;
         }
 
-        private void DespawnCheckpoint(int gameTime) {
-            Debug.Log($"Removed checkpoint at {gameTime}");
+        private async Task DespawnCheckpoint(int gameTime)
+        {
+            Checkpoint checkpoint = _checkpointsDict[gameTime];
+            await checkpoint.Despawn();
+
+            _checkpointsDict.Remove(gameTime);
         }
     }
 }

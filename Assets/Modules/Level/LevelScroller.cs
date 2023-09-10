@@ -26,11 +26,16 @@ namespace IsoRush.Level
         [SerializeField]
         private Transform _chunksParent;
 
-        private List<LevelChunk> _scrollElements = new List<LevelChunk>();
+
+        private List<LevelChunk> _scrollChunks = new List<LevelChunk>();
+
+        [Header("Extras")]
+        [SerializeField]
+        private List<Transform> _scrollExtras = new List<Transform>();
 
         void Start()
         {
-            _scrollElements.Clear();
+            _scrollChunks.Clear();
 
             for (int i = 0; i < _length / _gridSize; i++)
             {
@@ -38,24 +43,25 @@ namespace IsoRush.Level
                 instance.regularIndex = i;
                 instance.index.Value = i;
 
-                _scrollElements.Add(instance);
+                _scrollChunks.Add(instance);
             }
         }
 
         void Update()
         {
-            if (_gameState == null) {
+            if (_gameState == null)
+            {
                 return;
             }
 
             float gameTime = _gameState.GameTime.Value;
 
-            int elementsCount = _scrollElements.Count;
+            int elementsCount = _scrollChunks.Count;
             int scrollIndex = (int)(gameTime / _gridSize);
 
             for (int i = 0; i < elementsCount; i++)
             {
-                LevelChunk element = _scrollElements[i];
+                LevelChunk element = _scrollChunks[i];
 
                 int scrollLoops = (scrollIndex - element.regularIndex) / elementsCount;
                 element.index.Value = scrollLoops * elementsCount + element.regularIndex;
@@ -67,6 +73,15 @@ namespace IsoRush.Level
                     offsetScroll - _length * 0.5f,
                     element.transform.localPosition.y,
                     element.transform.localPosition.z
+                );
+            }
+
+            foreach (Transform scrollExtra in _scrollExtras)
+            {
+                scrollExtra.position = new Vector3(
+                    gameTime,
+                    scrollExtra.position.y,
+                    scrollExtra.position.z
                 );
             }
         }
