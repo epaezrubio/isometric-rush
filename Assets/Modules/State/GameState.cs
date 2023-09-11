@@ -8,6 +8,8 @@ namespace IsoRush.State
 {
     public class GameState : ITickable
     {
+        public ReactiveProperty<float> UnscaledGameTime = new ReactiveProperty<float>(0f);
+
         public ReactiveProperty<float> GameTime = new ReactiveProperty<float>(0f);
 
         public ReactiveProperty<float> CameraSize = new ReactiveProperty<float>(10f);

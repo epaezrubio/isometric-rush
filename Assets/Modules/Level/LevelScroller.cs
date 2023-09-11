@@ -12,7 +12,7 @@ namespace IsoRush.Level
 
         [Header("Grid")]
         [SerializeField]
-        [Min(1)]
+        [Min(0)]
         private float _length = 20;
 
         [SerializeField]
@@ -26,12 +26,7 @@ namespace IsoRush.Level
         [SerializeField]
         private Transform _chunksParent;
 
-
         private List<LevelChunk> _scrollChunks = new List<LevelChunk>();
-
-        [Header("Extras")]
-        [SerializeField]
-        private List<Transform> _scrollExtras = new List<Transform>();
 
         void Start()
         {
@@ -73,15 +68,6 @@ namespace IsoRush.Level
                     offsetScroll - _length * 0.5f,
                     element.transform.localPosition.y,
                     element.transform.localPosition.z
-                );
-            }
-
-            foreach (Transform scrollExtra in _scrollExtras)
-            {
-                scrollExtra.position = new Vector3(
-                    gameTime,
-                    scrollExtra.position.y,
-                    scrollExtra.position.z
                 );
             }
         }
