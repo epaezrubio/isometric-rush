@@ -39,13 +39,13 @@ namespace IsoRush.Input
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Add Checkpoint"",
-                    ""type"": ""Button"",
-                    ""id"": ""d088ed1f-aeeb-458b-be49-0c96ecb9abb1"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Zoom Out"",
+                    ""type"": ""Value"",
+                    ""id"": ""aab4a81a-4078-4eb4-a1eb-b79c27f7ced0"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -84,23 +84,23 @@ namespace IsoRush.Input
                 },
                 {
                     ""name"": """",
-                    ""id"": ""07cd33b8-f880-4b6a-b495-4f43adefc9ab"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""id"": ""af7a160f-b82a-4c07-8265-060afaf6195d"",
+                    ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Add Checkpoint"",
+                    ""action"": ""Zoom Out"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e2fa443e-7d6a-488f-82be-a396d5b69768"",
+                    ""id"": ""ed677722-b9e8-44dd-9459-15506ff330a7"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Add Checkpoint"",
+                    ""action"": ""Zoom Out"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -112,7 +112,7 @@ namespace IsoRush.Input
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-            m_Player_AddCheckpoint = m_Player.FindAction("Add Checkpoint", throwIfNotFound: true);
+            m_Player_ZoomOut = m_Player.FindAction("Zoom Out", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -175,13 +175,13 @@ namespace IsoRush.Input
         private readonly InputActionMap m_Player;
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Jump;
-        private readonly InputAction m_Player_AddCheckpoint;
+        private readonly InputAction m_Player_ZoomOut;
         public struct PlayerActions
         {
             private @InputActions m_Wrapper;
             public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
-            public InputAction @AddCheckpoint => m_Wrapper.m_Player_AddCheckpoint;
+            public InputAction @ZoomOut => m_Wrapper.m_Player_ZoomOut;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -194,9 +194,9 @@ namespace IsoRush.Input
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @AddCheckpoint.started += instance.OnAddCheckpoint;
-                @AddCheckpoint.performed += instance.OnAddCheckpoint;
-                @AddCheckpoint.canceled += instance.OnAddCheckpoint;
+                @ZoomOut.started += instance.OnZoomOut;
+                @ZoomOut.performed += instance.OnZoomOut;
+                @ZoomOut.canceled += instance.OnZoomOut;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -204,9 +204,9 @@ namespace IsoRush.Input
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
-                @AddCheckpoint.started -= instance.OnAddCheckpoint;
-                @AddCheckpoint.performed -= instance.OnAddCheckpoint;
-                @AddCheckpoint.canceled -= instance.OnAddCheckpoint;
+                @ZoomOut.started -= instance.OnZoomOut;
+                @ZoomOut.performed -= instance.OnZoomOut;
+                @ZoomOut.canceled -= instance.OnZoomOut;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -227,7 +227,7 @@ namespace IsoRush.Input
         public interface IPlayerActions
         {
             void OnJump(InputAction.CallbackContext context);
-            void OnAddCheckpoint(InputAction.CallbackContext context);
+            void OnZoomOut(InputAction.CallbackContext context);
         }
     }
 }

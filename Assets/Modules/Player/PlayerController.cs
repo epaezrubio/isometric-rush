@@ -20,34 +20,9 @@ namespace IsoRush.Player
         private InputActionReference jumpAction;
 
         [SerializeField]
-        private InputActionReference addCheckpointAction;
+        private InputActionReference zoomAction;
 
         private PlayerJumper jumper;
-
-        private bool _isJumping = false;
-
-        private bool _canPlaceCheckpoint
-        {
-            get
-            {
-                if (_isJumping)
-                {
-                    return false;
-                }
-
-                if (_gameState == null)
-                {
-                    return false;
-                }
-
-                if (_gameState.InventoryCheckpoints.Value == 0)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-        }
 
         void Awake()
         {
@@ -59,35 +34,11 @@ namespace IsoRush.Player
             _ = OnJumpPressedAsync(context);
         }
 
-        private void OnAddCheckPoint(CallbackContext context)
-        {
-            if (!_canPlaceCheckpoint)
-            {
-                return;
-            }
-
-            _gameState.InventoryCheckpoints.Value--;
-            _gameState.Checkpoints.Add(_gameState.GameTime.Value);
-        }
-
         private async Task OnJumpPressedAsync(CallbackContext context)
         {
-            if (context.interaction is TapInteraction)
-            {
-                _isJumping = true;
-                jumpAction.action.Disable();
-                await jumper.Jump();
-                jumpAction.action.Enable();
-                _isJumping = false;
-            }
-            else if (context.interaction is SlowTapInteraction)
-            {
-                _isJumping = true;
-                jumpAction.action.Disable();
-                await jumper.SuperJump();
-                jumpAction.action.Enable();
-                _isJumping = false;
-            }
+            jumpAction.action.Disable();
+            await jumper.Jump();
+            jumpAction.action.Enable();
         }
 
         public void EnableControls()
@@ -95,8 +46,7 @@ namespace IsoRush.Player
             jumpAction.action.Enable();
             jumpAction.action.performed += OnJumpPressed;
 
-            addCheckpointAction.action.Enable();
-            addCheckpointAction.action.performed += OnAddCheckPoint;
+            zoomAction.action.Enable();
         }
 
         public void DisableControls()
@@ -104,17 +54,21 @@ namespace IsoRush.Player
             jumpAction.action.Disable();
             jumpAction.action.performed -= OnJumpPressed;
 
-            addCheckpointAction.action.Disable();
-            addCheckpointAction.action.performed -= OnAddCheckPoint;
+            zoomAction.action.Disable();
+        }
+
+        void Update()
+        {
+            float zoomActionValue = zoomAction.action.ReadValue<float>();
+
+            _gameState.CameraPositionTarget.Value = new Vector3(-10 * zoomActionValue, 0, 0);
+            _gameState.CameraSizeTarget.Value = 10 + 10 * zoomActionValue;
         }
 
         void OnDestroy()
         {
             jumpAction.action.Disable();
             jumpAction.action.performed -= OnJumpPressed;
-
-            addCheckpointAction.action.Disable();
-            addCheckpointAction.action.performed -= OnAddCheckPoint;
         }
     }
 }

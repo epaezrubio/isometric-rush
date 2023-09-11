@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace IsoRush.Level
+namespace IsoRush.Level.Scrollable
 {
-    public class PositionScrollable : Scrollable
+    public class PositionScrollable : BaseScrollable
     {
         protected override void SetScroll(float scroll)
         {

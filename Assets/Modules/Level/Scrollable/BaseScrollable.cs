@@ -3,9 +3,9 @@ using UniRx;
 using UnityEngine;
 using VContainer;
 
-namespace IsoRush.Level
+namespace IsoRush.Level.Scrollable
 {
-    public class Scrollable : MonoBehaviour
+    public class BaseScrollable : MonoBehaviour
     {
         [Inject]
         protected GameState gameState;

@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967dbdfd06542554ea1b613b36b390f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speedMultiplier: 1
 --- !u!4 &1412284016 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4298724829077650407, guid: 13782fe9d59c6454aa81490062813a33,
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpAction: {fileID: -5957479476301497812, guid: 062c9ab129533f64581e2128672d4d2b,
     type: 3}
-  addCheckpointAction: {fileID: 8826201177091729177, guid: 062c9ab129533f64581e2128672d4d2b,
+  zoomAction: {fileID: 8961570723283943103, guid: 062c9ab129533f64581e2128672d4d2b,
     type: 3}
 --- !u!114 &1629527983
 MonoBehaviour:
@@ -1350,7 +1350,7 @@ MonoBehaviour:
   _jumpHeight: 4
   _jumpRotation: 90
   _superJumpHeight: 6
-  _superJumpRotation: 90
+  _sideJumpDistance: 3
 --- !u!54 &1629527984
 Rigidbody:
   m_ObjectHideFlags: 0

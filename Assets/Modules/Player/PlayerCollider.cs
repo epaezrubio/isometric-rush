@@ -21,8 +21,9 @@ namespace IsoRush.Player
 
         void Start()
         {
-            _playerCollider
-                .OnTriggerEnterAsObservable()
+            var triggerObservable = _playerCollider.OnTriggerEnterAsObservable();
+
+            triggerObservable
                 .Where(_ =>
                 {
                     return _gameState != null && _triggerer != null;
