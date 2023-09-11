@@ -10,7 +10,9 @@ namespace IsoRush.State
     {
         public ReactiveProperty<float> GameTime = new ReactiveProperty<float>(0f);
 
-        public ReactiveProperty<float> GameSpeed = new ReactiveProperty<float>(1f);
+        public ReactiveProperty<float> GameSpeed = new ReactiveProperty<float>(1.2f);
+
+        public ReactiveProperty<GameDifficulty> GameDifficulty = new ReactiveProperty<GameDifficulty>(State.GameDifficulty.Normal);
 
         public ReactiveProperty<float> ScrollSpeed = new ReactiveProperty<float>(10f);
 
@@ -28,7 +30,9 @@ namespace IsoRush.State
 
         public ReactiveProperty<int> InventoryCheckpoints = new ReactiveProperty<int>(5);
 
-        public ReactiveCollection<float> Checkpoints = new ReactiveCollection<float>();
+        public ReactiveProperty<float> CheckpointGameTime = new ReactiveProperty<float>();
+
+        public ReactiveProperty<int> CheckpointsCount = new ReactiveProperty<int>();
 
         public ReactiveDictionary<string, int> Triggers = new ReactiveDictionary<string, int>();
 

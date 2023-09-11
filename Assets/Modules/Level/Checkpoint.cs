@@ -1,22 +1,33 @@
-using System.Threading.Tasks;
-using DG.Tweening;
+using IsoRush.State;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using VContainer;
 
 namespace IsoRush.Level
 {
     public class Checkpoint : MonoBehaviour
     {
-        public async Task Spawn()
-        {
-            transform.position = new Vector3(0, 10, 0);
-            await transform.DOLocalMoveY(0, 1).AsyncWaitForCompletion();
-        }
+        [Inject]
+        private GameState _gameState;
 
-        public async Task Despawn()
-        {
-            await transform.DOLocalMoveY(10, 1).AsyncWaitForCompletion();
+        [SerializeField]
+        private Collider _collider;
 
-            Destroy(this);
+        [SerializeField]
+        private int _checkpointsCount = -1;
+
+        void Start()
+        {
+            _collider
+                .OnTriggerEnterAsObservable()
+                .Where(collider => collider.CompareTag("Player"))
+                .Subscribe(collider =>
+                {
+                    _gameState.CheckpointGameTime.Value = _gameState.GameTime.Value;
+                    _gameState.CheckpointsCount.Value = _checkpointsCount;
+                })
+                .AddTo(this);
         }
     }
 }

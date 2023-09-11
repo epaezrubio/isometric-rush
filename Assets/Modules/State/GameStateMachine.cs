@@ -41,10 +41,7 @@ namespace IsoRush.State
                 GameStateStates.RestoringCheckpoint,
                 new State<string>(onEnter: state =>
                 {
-                    var checkpoint = _gameState.Checkpoints.Last();
-                    _gameState.GameTime.Value = checkpoint;
-
-                    _gameState.Checkpoints.Remove(checkpoint);
+                    _gameState.GameTime.Value = _gameState.CheckpointGameTime.Value;
 
                     Trigger(GameStateEvents.OnResumeFromCheckpoint);
                 })
@@ -65,7 +62,12 @@ namespace IsoRush.State
                     GameStateStates.GameOver,
                     _ =>
                     {
-                        return _gameState.Checkpoints.Count == 0;
+                        if (_gameState.GameDifficulty.Value == GameDifficulty.Normal)
+                        {
+                            return false;
+                        }
+
+                        return _gameState.CheckpointsCount.Value == 0;
                     }
                 )
             );
@@ -77,7 +79,12 @@ namespace IsoRush.State
                     GameStateStates.RestoringCheckpoint,
                     _ =>
                     {
-                        return _gameState.Checkpoints.Count > 0;
+                        if (_gameState.GameDifficulty.Value == GameDifficulty.Normal)
+                        {
+                            return true;
+                        }
+
+                        return _gameState.CheckpointsCount.Value > 0;
                     }
                 )
             );

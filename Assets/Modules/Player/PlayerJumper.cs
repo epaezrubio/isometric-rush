@@ -44,7 +44,7 @@ namespace IsoRush.Player
                     + new Vector3(0, 0, leftJump ? -_sideJumpDistance : _sideJumpDistance),
                 _jumpHeight,
                 1,
-                0.6f
+                0.6f 
             );
 
             var rotateTween = transform.DORotateQuaternion(
