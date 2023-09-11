@@ -11,14 +11,14 @@ namespace IsoRush.Level
         protected GameState gameState;
 
         [SerializeField]
-        protected float speed = 1;
+        protected float speedMultiplier = 1;
 
         void Start()
         {
             gameState.GameTime
                 .Subscribe(gameTime =>
                 {
-                    SetScroll(gameTime * speed);
+                    SetScroll(gameTime * gameState.ScrollSpeed.Value * speedMultiplier);
                 })
                 .AddTo(this);
         }

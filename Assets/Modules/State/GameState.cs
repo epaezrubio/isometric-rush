@@ -8,9 +8,11 @@ namespace IsoRush.State
 {
     public class GameState : ITickable
     {
-        public ReactiveProperty<float> UnscaledGameTime = new ReactiveProperty<float>(0f);
-
         public ReactiveProperty<float> GameTime = new ReactiveProperty<float>(0f);
+
+        public ReactiveProperty<float> GameSpeed = new ReactiveProperty<float>(1f);
+
+        public ReactiveProperty<float> ScrollSpeed = new ReactiveProperty<float>(10f);
 
         public ReactiveProperty<float> CameraSize = new ReactiveProperty<float>(10f);
 
@@ -24,11 +26,9 @@ namespace IsoRush.State
             Vector3.zero
         );
 
-        public ReactiveProperty<int> ScrollSpeed = new ReactiveProperty<int>(10);
-
         public ReactiveProperty<int> InventoryCheckpoints = new ReactiveProperty<int>(5);
 
-        public ReactiveCollection<int> Checkpoints = new ReactiveCollection<int>();
+        public ReactiveCollection<float> Checkpoints = new ReactiveCollection<float>();
 
         public ReactiveDictionary<string, int> Triggers = new ReactiveDictionary<string, int>();
 

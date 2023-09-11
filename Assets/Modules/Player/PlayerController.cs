@@ -67,7 +67,7 @@ namespace IsoRush.Player
             }
 
             _gameState.InventoryCheckpoints.Value--;
-            _gameState.Checkpoints.Add((int)_gameState.GameTime.Value);
+            _gameState.Checkpoints.Add(_gameState.GameTime.Value);
         }
 
         private async Task OnJumpPressedAsync(CallbackContext context)

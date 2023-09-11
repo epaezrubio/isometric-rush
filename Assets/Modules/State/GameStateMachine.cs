@@ -28,8 +28,7 @@ namespace IsoRush.State
                     },
                     onLogic: state =>
                     {
-                        _gameState.UnscaledGameTime.Value += Time.deltaTime;
-                        _gameState.GameTime.Value += _gameState.ScrollSpeed.Value * Time.deltaTime;
+                        _gameState.GameTime.Value += _gameState.GameSpeed.Value * Time.deltaTime;
                     },
                     onExit: state =>
                     {
@@ -43,7 +42,6 @@ namespace IsoRush.State
                 new State<string>(onEnter: state =>
                 {
                     var checkpoint = _gameState.Checkpoints.Last();
-                    _gameState.UnscaledGameTime.Value = checkpoint;
                     _gameState.GameTime.Value = checkpoint;
 
                     _gameState.Checkpoints.Remove(checkpoint);

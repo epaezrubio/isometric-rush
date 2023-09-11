@@ -15,7 +15,7 @@ namespace IsoRush.Level
         [SerializeField]
         private Checkpoint _checkpointPrefab;
 
-        private Dictionary<int, Checkpoint> _checkpointsDict = new Dictionary<int, Checkpoint>();
+        private Dictionary<float, Checkpoint> _checkpointsDict = new Dictionary<float, Checkpoint>();
 
         void Start()
         {
@@ -36,7 +36,7 @@ namespace IsoRush.Level
                 .AddTo(this);
         }
 
-        private async Task SpawnCheckpoint(int gameTime)
+        private async Task SpawnCheckpoint(float gameTime)
         {
             Checkpoint checkpoint = Instantiate(_checkpointPrefab, transform);
             await checkpoint.Spawn();
@@ -44,7 +44,7 @@ namespace IsoRush.Level
             _checkpointsDict[gameTime] = checkpoint;
         }
 
-        private async Task DespawnCheckpoint(int gameTime)
+        private async Task DespawnCheckpoint(float gameTime)
         {
             Checkpoint checkpoint = _checkpointsDict[gameTime];
             await checkpoint.Despawn();

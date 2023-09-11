@@ -44,7 +44,7 @@ namespace IsoRush.Train
 
         void Update()
         {
-            float gameTime = _gameState.UnscaledGameTime.Value;
+            float gameTime = _gameState.GameTime.Value;
 
             if (gameTime < _startTime || gameTime > _startTime + _duration)
             {
