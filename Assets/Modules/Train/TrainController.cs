@@ -38,8 +38,6 @@ namespace IsoRush.Train
                 child.localPosition = Vector3.zero;
                 child.localRotation = Quaternion.identity;
             }
-
-            Debug.Log(_splineComponent.Spline.GetLength());
         }
 
         void Update()

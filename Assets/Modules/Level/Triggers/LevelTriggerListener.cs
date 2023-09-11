@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using VContainer;
 
-namespace IsoRush.Level.Elements
+namespace IsoRush.Level.Triggers
 {
     public class LevelTriggerListener : MonoBehaviour
     {

@@ -6,7 +6,7 @@ using UniRx.Triggers;
 using UnityEngine;
 using VContainer;
 
-namespace IsoRush.Level.Elements
+namespace IsoRush.Level.Triggers
 {
     public class LevelTrigger : MonoBehaviour
     {
