@@ -9,7 +9,7 @@ using Debug = UnityEngine.Debug;
 
 namespace IsoRush.State
 {
-    public class GameStateMachine : StateMachine, ITriggerer, IInitializable, ITickable
+    public class GameStateMachine : StateMachine, ITriggerer, IInitializable, ITickable, IFixedTickable
     {
         [Inject]
         private GameState _gameState;
@@ -28,7 +28,7 @@ namespace IsoRush.State
                     },
                     onLogic: state =>
                     {
-                        _gameState.GameTime.Value += _gameState.GameSpeed.Value * Time.deltaTime;
+                        _gameState.GameTime.Value += _gameState.GameSpeed.Value * Time.fixedDeltaTime;
                     },
                     onExit: state =>
                     {
@@ -104,7 +104,13 @@ namespace IsoRush.State
 
         public void Tick()
         {
+            // OnLogic();
+        }
+
+        public void FixedTick()
+        {
             OnLogic();
         }
+
     }
 }

@@ -2,7 +2,7 @@ using IsoRush.Player;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using static IsoRush.Player.PlayerJumper;
+using static IsoRush.Player.PhysicsPlayerMover;
 
 namespace IsoRush.Level.Jumpers
 {
@@ -21,7 +21,7 @@ namespace IsoRush.Level.Jumpers
                 .Where(collider => collider.CompareTag("Player"))
                 .Subscribe(collider =>
                 {
-                    _ = collider.GetComponent<PlayerJumper>().JumpSideways(_direction);
+                    collider.GetComponent<PhysicsPlayerMover>().JumpSideways(_direction);
                 })
                 .AddTo(this);
         }

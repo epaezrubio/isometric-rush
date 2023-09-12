@@ -15,21 +15,13 @@ namespace IsoRush.Utils
         [SerializeField]
         private Camera _camera;
 
-        void Start()
+        void Update()
         {
-            _gameState.CameraSize
-                .Subscribe(cameraSize =>
-                {
-                    _camera.orthographicSize = cameraSize;
-                })
-                .AddTo(this);
+            transform.position =
+                new Vector3(0, 0, _gameState.GameTime.Value * _gameState.ScrollSpeed.Value)
+                + _gameState.CameraPosition.Value;
 
-            _gameState.CameraPosition
-                .Subscribe(cameraPosition =>
-                {
-                    transform.position = cameraPosition;
-                })
-                .AddTo(this);
+            _camera.orthographicSize = _gameState.CameraSize.Value;
         }
     }
 }

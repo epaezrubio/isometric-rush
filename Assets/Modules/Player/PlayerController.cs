@@ -1,11 +1,7 @@
-using System;
 using System.Threading.Tasks;
-using IsoRush.Input;
 using IsoRush.State;
-using IsoRush.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 using VContainer;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -22,11 +18,11 @@ namespace IsoRush.Player
         [SerializeField]
         private InputActionReference zoomAction;
 
-        private PlayerJumper jumper;
+        private PhysicsPlayerMover jumper;
 
         void Awake()
         {
-            jumper = GetComponent<PlayerJumper>();
+            jumper = GetComponent<PhysicsPlayerMover>();
         }
 
         private void OnJumpPressed(CallbackContext context)
@@ -37,7 +33,7 @@ namespace IsoRush.Player
         private async Task OnJumpPressedAsync(CallbackContext context)
         {
             jumpAction.action.Disable();
-            await jumper.Jump();
+            jumper.Jump();
             jumpAction.action.Enable();
         }
 
@@ -61,7 +57,7 @@ namespace IsoRush.Player
         {
             float zoomActionValue = zoomAction.action.ReadValue<float>();
 
-            _gameState.CameraPositionTarget.Value = new Vector3(-10 * zoomActionValue, 0, 0);
+            _gameState.CameraPositionTarget.Value = new Vector3(0, 7 * zoomActionValue, 10 * zoomActionValue);
             _gameState.CameraSizeTarget.Value = 10 + 10 * zoomActionValue;
         }
 

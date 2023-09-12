@@ -6,7 +6,7 @@ namespace IsoRush.Level.Scrollable
     {
         protected override void SetScroll(float scroll)
         {
-            transform.localPosition = transform.right * scroll;
+            transform.localPosition = transform.forward * scroll;
         }
     }
 }

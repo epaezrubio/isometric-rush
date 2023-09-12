@@ -38,12 +38,12 @@ namespace IsoRush.State
 
         public void Tick()
         {
-            CameraSize.Value = Mathf.Lerp(CameraSize.Value, CameraSizeTarget.Value, Time.deltaTime * 2f);
+            CameraSize.Value = Mathf.Lerp(CameraSize.Value, CameraSizeTarget.Value, Time.deltaTime * 3f);
 
             CameraPosition.Value = Vector3.Lerp(
                 CameraPosition.Value,
                 CameraPositionTarget.Value,
-                Time.deltaTime * 2f
+                Time.deltaTime * 3f
             );
         }
     }
