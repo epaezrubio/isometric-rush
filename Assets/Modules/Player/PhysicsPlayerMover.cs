@@ -3,6 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using VContainer;
 using IsoRush.State;
+using System;
 
 namespace IsoRush.Player
 {
@@ -27,25 +28,15 @@ namespace IsoRush.Player
         private float _jumpForce = 2f;
 
         [SerializeField]
-        private float _jumpRotation = 90f;
-
-        [SerializeField]
         private float _sideJumpDistance = 5f;
 
         [SerializeField]
         private Rigidbody _rb;
 
         private float _targetX = 0;
-        private Quaternion _targetRotation;
-
-        void Start()
-        {
-            _targetRotation = _geometry.rotation;
-        }
 
         void Update()
         {
-            _geometry.rotation = Quaternion.RotateTowards(_geometry.rotation, _targetRotation, 2f);
         }
 
         void FixedUpdate()
@@ -70,8 +61,6 @@ namespace IsoRush.Player
 
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
             _groundDetector.ForceUngrounded = true;
-
-            // _targetRotation *= Quaternion.AngleAxis(_jumpRotation, transform.right);
         }
 
         public void JumpSideways(SideJumpDirection direction)
@@ -79,12 +68,18 @@ namespace IsoRush.Player
             var leftJump = direction == SideJumpDirection.Left;
 
             _targetX += leftJump ? -_sideJumpDistance : _sideJumpDistance;
-            _targetRotation *= Quaternion.AngleAxis(
-                _jumpRotation,
-                leftJump ? transform.forward : -transform.forward
-            );
 
             Jump(true);
+        }
+
+        public void ResetPositionTo(Vector3 value)
+        {
+            _targetX = value.x;
+
+            _rb.position = value;
+            _rb.velocity = Vector3.zero;
+
+            _groundDetector.ForceUngrounded = false;
         }
     }
 }

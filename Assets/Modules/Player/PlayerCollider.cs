@@ -21,7 +21,7 @@ namespace IsoRush.Player
 
         void Start()
         {
-            var triggerObservable = _playerCollider.OnCollisionEnterAsObservable();
+            var triggerObservable = _playerCollider.OnTriggerEnterAsObservable();
 
             triggerObservable
                 .Where(_ =>

@@ -30,6 +30,8 @@ namespace IsoRush.State
 
         public ReactiveProperty<int> InventoryCheckpoints = new ReactiveProperty<int>(5);
 
+        public ReactiveProperty<Vector3> CheckpointPosition = new ReactiveProperty<Vector3>();
+
         public ReactiveProperty<float> CheckpointGameTime = new ReactiveProperty<float>();
 
         public ReactiveProperty<int> CheckpointsCount = new ReactiveProperty<int>();

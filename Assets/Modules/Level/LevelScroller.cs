@@ -13,6 +13,10 @@ namespace IsoRush.Level
         [Header("Grid")]
         [SerializeField]
         [Min(0)]
+        private float _width = 200;
+
+        [SerializeField]
+        [Min(0)]
         private float _length = 20;
 
         [SerializeField]
@@ -74,23 +78,21 @@ namespace IsoRush.Level
 
         void OnDrawGizmos()
         {
-            float width = 50f;
-
             Gizmos.DrawLine(
-                transform.position + new Vector3(_length * 0.5f, 0, -width * 0.5f),
-                transform.position + new Vector3(_length * 0.5f, 0, width * 0.5f)
+                transform.position + new Vector3(-_width * 0.5f, 0, _length * 0.5f),
+                transform.position + new Vector3(_width * 0.5f, 0, _length * 0.5f)
             );
             Gizmos.DrawLine(
-                transform.position + new Vector3(_length * 0.5f, 0, width * 0.5f),
-                transform.position + new Vector3(-_length * 0.5f, 0, width * 0.5f)
+                transform.position + new Vector3(_width * 0.5f, 0, _length * 0.5f),
+                transform.position + new Vector3(_width * 0.5f, 0, -_length * 0.5f)
             );
             Gizmos.DrawLine(
-                transform.position + new Vector3(-_length * 0.5f, 0, width * 0.5f),
-                transform.position + new Vector3(-_length * 0.5f, 0, -width * 0.5f)
+                transform.position + new Vector3(_width * 0.5f, 0, -_length * 0.5f),
+                transform.position + new Vector3(-_width * 0.5f, 0, -_length * 0.5f)
             );
             Gizmos.DrawLine(
-                transform.position + new Vector3(-_length * 0.5f, 0, -width * 0.5f),
-                transform.position + new Vector3(_length * 0.5f, 0, -width * 0.5f)
+                transform.position + new Vector3(-_width * 0.5f, 0, -_length * 0.5f),
+                transform.position + new Vector3(-_width * 0.5f, 0, _length * 0.5f)
             );
 
             float gameTime = _gameState?.GameTime.Value ?? 0;
@@ -101,8 +103,8 @@ namespace IsoRush.Level
             for (float i = start; i < end; i += _gridSize)
             {
                 Gizmos.DrawLine(
-                    transform.position + new Vector3(i * _gridSize, 0, -width * 0.5f),
-                    transform.position + new Vector3(i * _gridSize, 0, width * 0.5f)
+                    transform.position + new Vector3(-_width * 0.5f, 0, i * _gridSize),
+                    transform.position + new Vector3(_width * 0.5f, 0, i * _gridSize)
                 );
             }
         }

@@ -17,6 +17,9 @@ namespace IsoRush.State
         [Inject]
         private PlayerController _playerController;
 
+        [Inject]
+        private PhysicsPlayerMover _playerMover;
+
         public GameStateMachine()
         {
             AddState(
@@ -42,6 +45,7 @@ namespace IsoRush.State
                 new State<string>(onEnter: state =>
                 {
                     _gameState.GameTime.Value = _gameState.CheckpointGameTime.Value;
+                    _playerMover.ResetPositionTo(_gameState.CheckpointPosition.Value);
 
                     Trigger(GameStateEvents.OnResumeFromCheckpoint);
                 })

@@ -24,6 +24,7 @@ namespace IsoRush.Level
                 .Where(collider => collider.CompareTag("Player"))
                 .Subscribe(collider =>
                 {
+                    _gameState.CheckpointPosition.Value = transform.parent.position;
                     _gameState.CheckpointGameTime.Value = _gameState.GameTime.Value;
                     _gameState.CheckpointsCount.Value = _checkpointsCount;
                 })
