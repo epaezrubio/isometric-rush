@@ -25,7 +25,10 @@ namespace IsoRush.Player
         private GroundedDetector _groundDetector;
 
         [SerializeField]
-        private float _jumpForce = 2f;
+        private Animator _animator;
+
+        [SerializeField]
+        private float _jumpForce = 3f;
 
         [SerializeField]
         private float _sideJumpDistance = 5f;
@@ -35,9 +38,7 @@ namespace IsoRush.Player
 
         private float _targetX = 0;
 
-        void Update()
-        {
-        }
+        void Update() { }
 
         void FixedUpdate()
         {
@@ -52,15 +53,20 @@ namespace IsoRush.Player
             );
         }
 
-        public void Jump(bool force = false)
+        public void Jump(bool force = false, bool animate = true)
         {
             if (!force && !_groundDetector.IsGrounded)
             {
                 return;
             }
 
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+            _rb.velocity = Vector3.up * _jumpForce;
             _groundDetector.ForceUngrounded = true;
+
+            if (animate)
+            {
+                _animator.Play("Jump Animation");
+            }
         }
 
         public void JumpSideways(SideJumpDirection direction)
@@ -69,7 +75,9 @@ namespace IsoRush.Player
 
             _targetX += leftJump ? -_sideJumpDistance : _sideJumpDistance;
 
-            Jump(true);
+            _animator.Play(leftJump ? "Left Side Jump Animation" : "Right Side Jump Animation");
+
+            Jump(true, false);
         }
 
         public void ResetPositionTo(Vector3 value)

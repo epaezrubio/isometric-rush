@@ -10,7 +10,7 @@ namespace IsoRush.State
     {
         public ReactiveProperty<float> GameTime = new ReactiveProperty<float>(0f);
 
-        public ReactiveProperty<float> GameSpeed = new ReactiveProperty<float>(1.2f);
+        public ReactiveProperty<float> GameSpeed = new ReactiveProperty<float>(1.3f);
 
         public ReactiveProperty<GameDifficulty> GameDifficulty = new ReactiveProperty<GameDifficulty>(State.GameDifficulty.Normal);
 
