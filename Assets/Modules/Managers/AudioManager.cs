@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using IsoRush.State;
 using UnityEngine;
+using VContainer;
 
 namespace IsoRush.Managers
 {
     public class AudioManager : MonoBehaviour
     {
+        [Inject]
+        private GameState _gameState;
+
         private AudioSource _audioSource;
 
         private float _targetVolume = 1f;
@@ -26,6 +31,8 @@ namespace IsoRush.Managers
         void Update()
         {
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, 0.05f);
+
+            Debug.Log($"Game time: {_gameState.GameTime.Value}, Audio time: {_audioSource.time}");
         }
 
         public void FadeIn()
@@ -40,7 +47,11 @@ namespace IsoRush.Managers
 
         public void Play()
         {
-            _audioSource?.Play();
+            if (_audioSource != null && _audioSource.clip != null)
+            {
+                _audioSource.Play();
+            }
+
             _playing = true;
         }
 
