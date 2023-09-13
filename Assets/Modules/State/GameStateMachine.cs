@@ -1,5 +1,6 @@
 using System.Linq;
 using FSM;
+using IsoRush.Managers;
 using IsoRush.Player;
 using IsoRush.Utils;
 using UnityEngine;
@@ -15,6 +16,9 @@ namespace IsoRush.State
         private GameState _gameState;
 
         [Inject]
+        private AudioManager _audioManager;
+
+        [Inject]
         private PlayerController _playerController;
 
         [Inject]
@@ -27,6 +31,7 @@ namespace IsoRush.State
                 new State<string>(
                     onEnter: state =>
                     {
+                        _audioManager.Play();
                         _playerController?.EnableControls();
                     },
                     onLogic: state =>
@@ -35,6 +40,7 @@ namespace IsoRush.State
                     },
                     onExit: state =>
                     {
+                        _audioManager.Stop();
                         _playerController?.DisableControls();
                     }
                 )
@@ -44,7 +50,12 @@ namespace IsoRush.State
                 GameStateStates.RestoringCheckpoint,
                 new State<string>(onEnter: state =>
                 {
-                    _gameState.GameTime.Value = _gameState.CheckpointGameTime.Value;
+                    float gameTime =_gameState.CheckpointGameTime.Value;
+
+                    _gameState.GameTime.Value = gameTime;
+
+                    _audioManager.SetMusicTime(gameTime);
+                    _audioManager.FadeIn();
                     _playerMover.ResetPositionTo(_gameState.CheckpointPosition.Value);
 
                     Trigger(GameStateEvents.OnResumeFromCheckpoint);
@@ -83,6 +94,8 @@ namespace IsoRush.State
                     GameStateStates.RestoringCheckpoint,
                     _ =>
                     {
+                        _audioManager.FadeOut();
+
                         if (_gameState.GameDifficulty.Value == GameDifficulty.Normal)
                         {
                             return true;

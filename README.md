@@ -11,3 +11,4 @@
 ### Assets
 
 - [Space Kit](https://kenney.nl/assets/space-kit) - by Kenney
+- [Singularity](https://opengameart.org/content/singularity-0) - by Vitalezzz

@@ -1,7 +1,6 @@
-using IsoRush;
+using IsoRush.Managers;
 using IsoRush.Player;
 using IsoRush.State;
-using IsoRush.Utils;
 using VContainer;
 using VContainer.Unity;
 
@@ -12,6 +11,8 @@ public class BaseScope : LifetimeScope
         builder.Register<GameState>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
         builder.Register<GameStateMachine>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+        builder.RegisterComponentInHierarchy<AudioManager>().AsImplementedInterfaces().AsSelf();
 
         builder.RegisterComponentInHierarchy<PlayerController>().AsImplementedInterfaces().AsSelf();
 
