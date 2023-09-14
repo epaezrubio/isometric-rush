@@ -30,9 +30,7 @@ namespace IsoRush.Managers
 
         void Update()
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, 0.05f);
-
-            Debug.Log($"Game time: {_gameState.GameTime.Value}, Audio time: {_audioSource.time}");
+            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, 0.01f);
         }
 
         public void FadeIn()

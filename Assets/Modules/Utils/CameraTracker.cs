@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using IsoRush.Player;
 using IsoRush.State;
 using UniRx;
 using UnityEngine;
@@ -15,11 +16,22 @@ namespace IsoRush.Utils
         [SerializeField]
         private Camera _camera;
 
+        [SerializeField]
+        private PhysicsPlayerMover _playerTransform;
+
         void Update()
         {
+            // var playerXDampling =
+            //     Mathf.MoveTowards(transform.position.x,, 0.5f)
+            //     * Time.deltaTime
+            //     * 50f;
+
             transform.position =
-                new Vector3(0, 0, _gameState.GameTime.Value * _gameState.ScrollSpeed.Value)
-                + _gameState.CameraPosition.Value;
+                new Vector3(
+                     _playerTransform.transform.position.x,
+                    0,
+                    _gameState.GameTime.Value * _gameState.ScrollSpeed.Value
+                ) + _gameState.CameraPosition.Value;
 
             _camera.orthographicSize = _gameState.CameraSize.Value;
         }

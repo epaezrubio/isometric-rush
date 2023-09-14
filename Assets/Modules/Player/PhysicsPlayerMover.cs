@@ -36,13 +36,13 @@ namespace IsoRush.Player
         [SerializeField]
         private Rigidbody _rb;
 
-        private float _targetX = 0;
+        public float targetX = 0;
 
         void Update() { }
 
         void FixedUpdate()
         {
-            float x = Mathf.MoveTowards(_rb.position.x, _targetX, 0.25f);
+            float x = Mathf.MoveTowards(_rb.position.x, targetX, 0.25f);
 
             _rb.MovePosition(
                 new Vector3(
@@ -73,7 +73,7 @@ namespace IsoRush.Player
         {
             var leftJump = direction == SideJumpDirection.Left;
 
-            _targetX += leftJump ? -_sideJumpDistance : _sideJumpDistance;
+            targetX += leftJump ? -_sideJumpDistance : _sideJumpDistance;
 
             _animator.Play(leftJump ? "Left Side Jump Animation" : "Right Side Jump Animation");
 
@@ -82,7 +82,7 @@ namespace IsoRush.Player
 
         public void ResetPositionTo(Vector3 value)
         {
-            _targetX = value.x;
+            targetX = value.x;
 
             _rb.position = value;
             _rb.velocity = Vector3.zero;
