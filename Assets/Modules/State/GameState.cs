@@ -6,13 +6,14 @@ using VContainer.Unity;
 
 namespace IsoRush.State
 {
-    public class GameState : ITickable
+    public class GameState : ITickable, IFixedTickable
     {
         public ReactiveProperty<float> GameTime = new ReactiveProperty<float>(0f);
 
         public ReactiveProperty<float> GameSpeed = new ReactiveProperty<float>(1f);
 
-        public ReactiveProperty<GameDifficulty> GameDifficulty = new ReactiveProperty<GameDifficulty>(State.GameDifficulty.Normal);
+        public ReactiveProperty<GameDifficulty> GameDifficulty =
+            new ReactiveProperty<GameDifficulty>(State.GameDifficulty.Normal);
 
         public ReactiveProperty<float> ScrollSpeed = new ReactiveProperty<float>(15f);
 
@@ -38,9 +39,18 @@ namespace IsoRush.State
 
         public ReactiveDictionary<string, int> Triggers = new ReactiveDictionary<string, int>();
 
+        public void FixedTick()
+        {
+            GameTime.Value += GameSpeed.Value * Time.fixedDeltaTime;
+        }
+
         public void Tick()
         {
-            CameraSize.Value = Mathf.Lerp(CameraSize.Value, CameraSizeTarget.Value, Time.deltaTime * 3f);
+            CameraSize.Value = Mathf.Lerp(
+                CameraSize.Value,
+                CameraSizeTarget.Value,
+                Time.deltaTime * 3f
+            );
 
             CameraPosition.Value = Vector3.Lerp(
                 CameraPosition.Value,

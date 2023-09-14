@@ -19,19 +19,17 @@ namespace IsoRush.Utils
         [SerializeField]
         private PhysicsPlayerMover _playerTransform;
 
+        public bool xOverride = false;
+
+        public float trackedXOverride = 0;
+
         void Update()
         {
-            // var playerXDampling =
-            //     Mathf.MoveTowards(transform.position.x,, 0.5f)
-            //     * Time.deltaTime
-            //     * 50f;
+            float dampedX = xOverride ? trackedXOverride : _playerTransform.transform.position.x;
 
             transform.position =
-                new Vector3(
-                     _playerTransform.transform.position.x,
-                    0,
-                    _gameState.GameTime.Value * _gameState.ScrollSpeed.Value
-                ) + _gameState.CameraPosition.Value;
+                new Vector3(dampedX, 0, _gameState.GameTime.Value * _gameState.ScrollSpeed.Value)
+                + _gameState.CameraPosition.Value;
 
             _camera.orthographicSize = _gameState.CameraSize.Value;
         }

@@ -38,10 +38,17 @@ namespace IsoRush.Player
 
         public float targetX = 0;
 
+        private bool _ragDoll = false;
+
         void Update() { }
 
         void FixedUpdate()
         {
+            if (_ragDoll)
+            {
+                return;
+            }
+
             float x = Mathf.MoveTowards(_rb.position.x, targetX, 0.25f);
 
             _rb.MovePosition(
@@ -88,6 +95,17 @@ namespace IsoRush.Player
             _rb.velocity = Vector3.zero;
 
             _groundDetector.ForceUngrounded = false;
+        }
+
+        public void EnableRagDoll()
+        {
+            _rb.velocity = _rb.velocity + transform.forward * 8;
+            _ragDoll = true;
+        }
+
+        public void DisableRagDoll()
+        {
+            _ragDoll = false;
         }
     }
 }

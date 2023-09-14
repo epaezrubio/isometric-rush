@@ -10,7 +10,12 @@ using Debug = UnityEngine.Debug;
 
 namespace IsoRush.State
 {
-    public class GameStateMachine : StateMachine, ITriggerer, IInitializable, ITickable, IFixedTickable
+    public class GameStateMachine
+        : StateMachine,
+            ITriggerer,
+            IInitializable,
+            ITickable,
+            IFixedTickable
     {
         [Inject]
         private GameState _gameState;
@@ -24,6 +29,9 @@ namespace IsoRush.State
         [Inject]
         private PhysicsPlayerMover _playerMover;
 
+        [Inject]
+        private CameraTracker _cameraTracker;
+
         public GameStateMachine()
         {
             AddState(
@@ -31,17 +39,61 @@ namespace IsoRush.State
                 new State<string>(
                     onEnter: state =>
                     {
-                        _audioManager.Play();
+                        _cameraTracker.xOverride = false;
+                        _audioManager?.Play();
+                        _audioManager?.FadeIn();
+                        _audioManager?.SetMusicTime(_gameState.GameTime.Value);
+                        _playerMover?.DisableRagDoll();
                         _playerController?.EnableControls();
-                    },
-                    onLogic: state =>
-                    {
-                        _gameState.GameTime.Value += _gameState.GameSpeed.Value * Time.fixedDeltaTime;
+                        _gameState.GameSpeed.Value = 1;
                     },
                     onExit: state =>
                     {
-                        _audioManager.Stop();
                         _playerController?.DisableControls();
+                    }
+                )
+            );
+
+            AddState(
+                GameStateStates.CrashStoppingGameplay,
+                new State<string>(
+                    onEnter: state =>
+                    {
+                        _audioManager.FadeOut();
+                        _playerMover.EnableRagDoll();
+                    },
+                    onLogic: state =>
+                    {
+                        _gameState.GameSpeed.Value = Mathf.MoveTowards(
+                            _gameState.GameSpeed.Value,
+                            0,
+                            0.8f * Time.fixedDeltaTime
+                        );
+                    }
+                )
+            );
+
+            AddState(
+                GameStateStates.RestoringCheckpointTime,
+                new State<string>(
+                    onEnter: state =>
+                    {
+                        _cameraTracker.xOverride = true;
+                        _cameraTracker.trackedXOverride = _cameraTracker.transform.position.x;
+                    },
+                    onLogic: state =>
+                    {
+                        _cameraTracker.trackedXOverride = Mathf.MoveTowards(
+                            _cameraTracker.trackedXOverride,
+                            _gameState.CheckpointPosition.Value.x,
+                            10f * Time.fixedDeltaTime
+                        );
+
+                        _gameState.GameTime.Value = Mathf.MoveTowards(
+                            _gameState.GameTime.Value,
+                            _gameState.CheckpointGameTime.Value,
+                            5f * Time.fixedDeltaTime
+                        );
                     }
                 )
             );
@@ -50,11 +102,6 @@ namespace IsoRush.State
                 GameStateStates.RestoringCheckpoint,
                 new State<string>(onEnter: state =>
                 {
-                    float gameTime =_gameState.CheckpointGameTime.Value;
-
-                    _gameState.GameTime.Value = gameTime;
-
-                    _audioManager.SetMusicTime(gameTime);
                     _audioManager.FadeIn();
                     _playerMover.ResetPositionTo(_gameState.CheckpointPosition.Value);
 
@@ -91,17 +138,37 @@ namespace IsoRush.State
                 GameStateEvents.OnGameOverTrigger,
                 new Transition(
                     GameStateStates.Gameplay,
-                    GameStateStates.RestoringCheckpoint,
+                    GameStateStates.CrashStoppingGameplay,
                     _ =>
                     {
-                        _audioManager.FadeOut();
-
                         if (_gameState.GameDifficulty.Value == GameDifficulty.Normal)
                         {
                             return true;
                         }
 
                         return _gameState.CheckpointsCount.Value > 0;
+                    }
+                )
+            );
+
+            AddTransition(
+                new Transition(
+                    GameStateStates.CrashStoppingGameplay,
+                    GameStateStates.RestoringCheckpointTime,
+                    _ =>
+                    {
+                        return _gameState.GameSpeed.Value == 0;
+                    }
+                )
+            );
+
+            AddTransition(
+                new Transition(
+                    GameStateStates.RestoringCheckpointTime,
+                    GameStateStates.RestoringCheckpoint,
+                    _ =>
+                    {
+                        return _gameState.GameTime.Value == _gameState.CheckpointGameTime.Value;
                     }
                 )
             );
@@ -128,6 +195,5 @@ namespace IsoRush.State
         {
             OnLogic();
         }
-
     }
 }

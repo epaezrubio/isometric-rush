@@ -12,6 +12,7 @@ namespace IsoRush.Managers
         [Inject]
         private GameState _gameState;
 
+        [SerializeField]
         private AudioSource _audioSource;
 
         private float _targetVolume = 1f;
@@ -20,8 +21,6 @@ namespace IsoRush.Managers
 
         void Start()
         {
-            _audioSource = GetComponent<AudioSource>();
-
             if (_playing)
             {
                 Play();
@@ -30,11 +29,20 @@ namespace IsoRush.Managers
 
         void Update()
         {
-            _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, 0.01f);
+            _audioSource.volume = Mathf.MoveTowards(
+                _audioSource.volume,
+                _targetVolume,
+                0.08f * Time.deltaTime
+            );
         }
 
         public void FadeIn()
         {
+            if (_audioSource)
+            {
+                _audioSource.volume = 0;
+            }
+
             _targetVolume = 1;
         }
 
