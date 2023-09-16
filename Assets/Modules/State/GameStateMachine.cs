@@ -86,7 +86,7 @@ namespace IsoRush.State
                         _cameraTracker.trackedXOverride = Mathf.MoveTowards(
                             _cameraTracker.trackedXOverride,
                             _gameState.CheckpointPosition.Value.x,
-                            10f * Time.fixedDeltaTime
+                            22f * Time.fixedDeltaTime
                         );
 
                         _gameState.GameTime.Value = Mathf.MoveTowards(
