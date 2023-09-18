@@ -113,6 +113,12 @@ BoxCollider:
     type: 3}
   m_PrefabInstance: {fileID: 5392482516228629321}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &4056481142635334864 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8259168905454841753, guid: 8592780872662534aa5b4d220c39fa45,
+    type: 3}
+  m_PrefabInstance: {fileID: 5392482516228629321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7981900558789626030 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2598746324990569447, guid: 8592780872662534aa5b4d220c39fa45,
@@ -133,3 +139,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 545089600148274632}
   _direction: 1
+  _fx: {fileID: 4056481142635334864}

@@ -21,6 +21,8 @@ public class BaseScope : LifetimeScope
 
         builder.RegisterComponentInHierarchy<PlayerAnimator>().AsImplementedInterfaces().AsSelf();
 
+        builder.RegisterComponentInHierarchy<PlayerFX>().AsImplementedInterfaces().AsSelf();
+
         builder.RegisterComponentInHierarchy<PhysicsPlayerMover>().AsImplementedInterfaces().AsSelf();
     }
 }

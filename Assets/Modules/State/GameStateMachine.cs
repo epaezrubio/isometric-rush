@@ -36,6 +36,9 @@ namespace IsoRush.State
         private PhysicsPlayerMover _playerMover;
 
         [Inject]
+        private PlayerFX _playerFX;
+
+        [Inject]
         private CameraTracker _cameraTracker;
 
         public GameStateMachine()
@@ -65,6 +68,7 @@ namespace IsoRush.State
                 new State<string>(
                     onEnter: state =>
                     {
+                        _playerFX.PlayDestroySound();
                         _audioManager.FadeOut();
                         _playerMover.EnableRagDoll();
                     },
@@ -86,6 +90,8 @@ namespace IsoRush.State
                     {
                         _cameraTracker.xOverride = true;
                         _cameraTracker.trackedXOverride = _cameraTracker.transform.position.x;
+
+                        _audioManager.StartWarpSound();
                     },
                     onLogic: state =>
                     {
@@ -100,6 +106,9 @@ namespace IsoRush.State
                             _gameState.CheckpointGameTime.Value,
                             5f * Time.fixedDeltaTime
                         );
+                    },
+                    onExit: state => {
+                        _audioManager.StopWarpSound();
                     }
                 )
             );
@@ -130,7 +139,7 @@ namespace IsoRush.State
                     {
                         _gameState.GameSpeed.Value = 1;
                         _gameState.CameraCinematic.Value = false;
-                        
+
                         _physicsPlayerMover.EnablePhysics();
                         _playerAnimator.GetComponent<Animator>().SetBool("OutroAnimation", false);
                     }

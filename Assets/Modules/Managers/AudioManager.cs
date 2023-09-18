@@ -13,12 +13,16 @@ namespace IsoRush.Managers
         private GameState _gameState;
 
         [SerializeField]
-        private AudioSource _audioSource;
+        private AudioSource _musicAudioSource;
+
+        [SerializeField]
+        private AudioSource _warpAudioSource;
 
         private float _targetVolume = 1f;
 
-        private bool _playing = false;
+        private float _fadeSpeed = 0.2f;
 
+        private bool _playing = false;
         void Start()
         {
             if (_playing)
@@ -29,33 +33,35 @@ namespace IsoRush.Managers
 
         void Update()
         {
-            _audioSource.volume = Mathf.MoveTowards(
-                _audioSource.volume,
+            _musicAudioSource.volume = Mathf.MoveTowards(
+                _musicAudioSource.volume,
                 _targetVolume,
-                0.08f * Time.deltaTime
+                _fadeSpeed * Time.deltaTime
             );
         }
 
         public void FadeIn()
         {
-            if (_audioSource)
+            if (_musicAudioSource)
             {
-                _audioSource.volume = 0;
+                _musicAudioSource.volume = 0;
             }
 
             _targetVolume = 1;
+            _fadeSpeed = 0.4f;
         }
 
         public void FadeOut()
         {
             _targetVolume = 0;
+            _fadeSpeed = 1f;
         }
 
         public void Play()
         {
-            if (_audioSource != null && _audioSource.clip != null)
+            if (_musicAudioSource != null && _musicAudioSource.clip != null)
             {
-                _audioSource.Play();
+                _musicAudioSource.Play();
             }
 
             _playing = true;
@@ -63,13 +69,23 @@ namespace IsoRush.Managers
 
         public void SetMusicTime(float gameTime)
         {
-            _audioSource.time = gameTime;
+            _musicAudioSource.time = gameTime;
         }
 
         public void Stop()
         {
-            _audioSource?.Stop();
+            _musicAudioSource?.Stop();
             _playing = false;
+        }
+
+        public void StartWarpSound()
+        {
+            _warpAudioSource.Play();
+        }
+
+        public void StopWarpSound()
+        {
+            _warpAudioSource.Stop();
         }
     }
 }

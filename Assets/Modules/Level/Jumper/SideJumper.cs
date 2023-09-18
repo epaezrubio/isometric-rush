@@ -14,6 +14,9 @@ namespace IsoRush.Level.Jumpers
         [SerializeField]
         private SideJumpDirection _direction;
 
+        [SerializeField]
+        private AudioSource _fx;
+
         void Start()
         {
             _collider
@@ -22,6 +25,7 @@ namespace IsoRush.Level.Jumpers
                 .Subscribe(collider =>
                 {
                     collider.GetComponent<PhysicsPlayerMover>().JumpSideways(_direction);
+                    _fx.Play();
                 })
                 .AddTo(this);
         }

@@ -4,6 +4,7 @@ using DG.Tweening;
 using VContainer;
 using IsoRush.State;
 using System;
+using System.Collections.Generic;
 
 namespace IsoRush.Player
 {
@@ -26,6 +27,9 @@ namespace IsoRush.Player
 
         [SerializeField]
         private Animator _animator;
+
+        [SerializeField]
+        private PlayerFX _playerFX;
 
         [SerializeField]
         private float _jumpForce = 3f;
@@ -69,6 +73,7 @@ namespace IsoRush.Player
 
             _rb.velocity = Vector3.up * _jumpForce;
             _groundDetector.ForceUngrounded = true;
+            _playerFX.PlayJumpSound();
 
             if (animate)
             {
@@ -100,12 +105,16 @@ namespace IsoRush.Player
         public void EnableRagDoll()
         {
             _rb.velocity = _rb.velocity + transform.forward * 8;
+            _rb.constraints = RigidbodyConstraints.None;
+
             _ragDoll = true;
         }
 
         public void DisableRagDoll()
         {
             _ragDoll = false;
+            _rb.constraints = RigidbodyConstraints.FreezeRotation;
+            _rb.rotation = Quaternion.identity;
         }
 
         public void EnablePhysics()
