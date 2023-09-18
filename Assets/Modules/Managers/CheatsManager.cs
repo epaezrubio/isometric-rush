@@ -69,7 +69,7 @@ namespace IsoRush.Managers
         void Write()
         {
             var rb = _player.GetComponent<Rigidbody>();
-            rb.position = new Vector3(_x, rb.position.y, rb.position.z);
+            rb.position = new Vector3(_x, 16, rb.position.z);
 
             _gameState.GameTime.Value = _gameTime;
             _gameState.GameSpeed.Value = _gameSpeed;

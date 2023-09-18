@@ -17,3 +17,5 @@
 - [Space Ship Shield Sounds](https://opengameart.org/content/space-ship-shield-sounds) - by bart
 - [Warp Engine Engage Sound](https://opengameart.org/content/warp-engine-engage-sound) - by bart
 - [4 sci-fi menu sounds](https://opengameart.org/content/4-sci-fi-menu-sounds) - by Tim Mortimer
+- [Lava Splash](https://opengameart.org/content/lava-splash) - by Michael Baradi
+- [Beep Tone Sound FX](https://opengameart.org/content/beep-tone-sound-sfx) - by qubodup

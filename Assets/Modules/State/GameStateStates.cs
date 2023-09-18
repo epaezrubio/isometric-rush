@@ -2,6 +2,8 @@ namespace IsoRush.State
 {
     public static class GameStateStates
     {
+        public static string Init = "Init";
+
         public static string Gameplay = "Gameplay";
 
         public static string CrashStoppingGameplay = "CrashStoppingGameplay";
@@ -13,5 +15,7 @@ namespace IsoRush.State
         public static string GameOver = "GameOver";
 
         public static string OutroAnimation = "OutroAnimation";
+
+        public static string Exit = "Exit";
     }
 }

@@ -74,11 +74,6 @@ MonoBehaviour:
   _geometry: {fileID: 2953426912891392790}
   _groundDetector: {fileID: 5933818136069412}
   _animator: {fileID: 6880979163537759545}
-  _ragDollComponents:
-  - {fileID: 6574751661234344040}
-  - {fileID: 6577355710982818104}
-  _nonRagDollComponents:
-  - {fileID: 2054402977967055436}
   _playerFX: {fileID: 1583382527625223061}
   _jumpForce: 25
   _sideJumpDistance: 6
@@ -123,7 +118,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!65 &2054402977967055436
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -516,6 +511,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: aca314814f9bbc741ae354dc095e4cc2,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aca314814f9bbc741ae354dc095e4cc2,
         type: 3}

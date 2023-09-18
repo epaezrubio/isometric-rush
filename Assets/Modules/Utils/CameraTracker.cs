@@ -23,7 +23,7 @@ namespace IsoRush.Utils
 
         public float trackedXOverride = 0;
 
-        void Update()
+        void FixedUpdate()
         {
             float dampedX = xOverride ? trackedXOverride : _playerTransform.transform.position.x;
 

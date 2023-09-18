@@ -51,10 +51,10 @@ namespace IsoRush.Managers
             _fadeSpeed = 0.4f;
         }
 
-        public void FadeOut()
+        public void FadeOut(float fadeSpeed = 1f)
         {
             _targetVolume = 0;
-            _fadeSpeed = 1f;
+            _fadeSpeed = fadeSpeed;
         }
 
         public void Play()

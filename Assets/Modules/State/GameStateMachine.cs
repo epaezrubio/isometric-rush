@@ -2,8 +2,10 @@ using System.Linq;
 using FSM;
 using IsoRush.Managers;
 using IsoRush.Player;
+using IsoRush.UI;
 using IsoRush.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 using Debug = UnityEngine.Debug;
@@ -41,8 +43,19 @@ namespace IsoRush.State
         [Inject]
         private CameraTracker _cameraTracker;
 
+        [Inject]
+        private SceneFader _sceneFader;
+
         public GameStateMachine()
         {
+            AddState(
+                GameStateStates.Init,
+                new State<string>(onEnter: state =>
+                {
+                    // _sceneFader.FadeOut();
+                })
+            );
+
             AddState(
                 GameStateStates.Gameplay,
                 new State<string>(
@@ -107,7 +120,8 @@ namespace IsoRush.State
                             5f * Time.fixedDeltaTime
                         );
                     },
-                    onExit: state => {
+                    onExit: state =>
+                    {
                         _audioManager.StopWarpSound();
                     }
                 )
@@ -135,6 +149,18 @@ namespace IsoRush.State
                         _physicsPlayerMover.DisablePhysics();
                         _playerAnimator.GetComponent<Animator>().SetBool("OutroAnimation", true);
                     },
+                    onLogic: state =>
+                    {
+                        if (state.timer.Elapsed > 10f)
+                        {
+                            Trigger(GameStateEvents.OnExit);
+                        }
+                        else if (state.timer.Elapsed > 5f)
+                        {
+                            _sceneFader.FadeIn();
+                            _audioManager.FadeOut(0.3f);
+                        }
+                    },
                     onExit: state =>
                     {
                         _gameState.GameSpeed.Value = 1;
@@ -142,9 +168,14 @@ namespace IsoRush.State
 
                         _physicsPlayerMover.EnablePhysics();
                         _playerAnimator.GetComponent<Animator>().SetBool("OutroAnimation", false);
+
+                        // main menu
+                        SceneManager.LoadScene(0);
                     }
                 )
             );
+
+            AddTransition(new Transition(GameStateStates.Init, GameStateStates.Gameplay));
 
             AddTriggerTransition(
                 GameStateEvents.OnGameOverTrigger,
@@ -212,7 +243,12 @@ namespace IsoRush.State
                 new Transition(GameStateStates.Gameplay, GameStateStates.OutroAnimation)
             );
 
-            SetStartState(GameStateStates.Gameplay);
+            AddTriggerTransition(
+                GameStateEvents.OnExit,
+                new Transition(GameStateStates.OutroAnimation, GameStateStates.Exit)
+            );
+
+            SetStartState(GameStateStates.Init);
         }
 
         public void Initialize()

@@ -1,6 +1,7 @@
 using IsoRush.Managers;
 using IsoRush.Player;
 using IsoRush.State;
+using IsoRush.UI;
 using IsoRush.Utils;
 using VContainer;
 using VContainer.Unity;
@@ -24,5 +25,7 @@ public class BaseScope : LifetimeScope
         builder.RegisterComponentInHierarchy<PlayerFX>().AsImplementedInterfaces().AsSelf();
 
         builder.RegisterComponentInHierarchy<PhysicsPlayerMover>().AsImplementedInterfaces().AsSelf();
+
+        builder.RegisterComponentInHierarchy<SceneFader>().AsImplementedInterfaces().AsSelf();
     }
 }

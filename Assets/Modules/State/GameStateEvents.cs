@@ -11,5 +11,7 @@ namespace IsoRush.State
         public static string OnCheckpointUsed = "OnCheckpointUsed";
 
         public static string OnGameCompleted = "OnGameCompleted";
+
+        public static string OnExit = "OnExit";
     }
 }
