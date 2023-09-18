@@ -9,5 +9,7 @@ namespace IsoRush.State
         public static string OnCheckpointCollected = "OnCheckpointCollected";
 
         public static string OnCheckpointUsed = "OnCheckpointUsed";
+
+        public static string OnGameCompleted = "OnGameCompleted";
     }
 }

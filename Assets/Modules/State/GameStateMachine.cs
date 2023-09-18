@@ -27,6 +27,12 @@ namespace IsoRush.State
         private PlayerController _playerController;
 
         [Inject]
+        private PhysicsPlayerMover _physicsPlayerMover;
+
+        [Inject]
+        private PlayerAnimator _playerAnimator;
+
+        [Inject]
         private PhysicsPlayerMover _playerMover;
 
         [Inject]
@@ -110,11 +116,25 @@ namespace IsoRush.State
             );
 
             AddState(
-                GameStateStates.GameOver,
-                new State<string>(onEnter: state =>
-                {
-                    Debug.Log("Game Over");
-                })
+                GameStateStates.OutroAnimation,
+                new State<string>(
+                    onEnter: state =>
+                    {
+                        _gameState.GameSpeed.Value = 0;
+                        _gameState.CameraCinematic.Value = true;
+
+                        _physicsPlayerMover.DisablePhysics();
+                        _playerAnimator.GetComponent<Animator>().SetBool("OutroAnimation", true);
+                    },
+                    onExit: state =>
+                    {
+                        _gameState.GameSpeed.Value = 1;
+                        _gameState.CameraCinematic.Value = false;
+                        
+                        _physicsPlayerMover.EnablePhysics();
+                        _playerAnimator.GetComponent<Animator>().SetBool("OutroAnimation", false);
+                    }
+                )
             );
 
             AddTriggerTransition(
@@ -176,6 +196,11 @@ namespace IsoRush.State
             AddTriggerTransition(
                 GameStateEvents.OnResumeFromCheckpoint,
                 new Transition(GameStateStates.RestoringCheckpoint, GameStateStates.Gameplay)
+            );
+
+            AddTriggerTransition(
+                GameStateEvents.OnGameCompleted,
+                new Transition(GameStateStates.Gameplay, GameStateStates.OutroAnimation)
             );
 
             SetStartState(GameStateStates.Gameplay);

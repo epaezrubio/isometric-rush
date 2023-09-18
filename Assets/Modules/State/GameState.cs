@@ -21,6 +21,8 @@ namespace IsoRush.State
 
         public ReactiveProperty<float> CameraSizeTarget = new ReactiveProperty<float>(10f);
 
+        public ReactiveProperty<bool> CameraCinematic = new ReactiveProperty<bool>(false);
+
         public ReactiveProperty<Vector3> CameraPosition = new ReactiveProperty<Vector3>(
             Vector3.zero
         );
@@ -46,17 +48,26 @@ namespace IsoRush.State
 
         public void Tick()
         {
-            CameraSize.Value = Mathf.Lerp(
-                CameraSize.Value,
-                CameraSizeTarget.Value,
-                Time.deltaTime * 3f
-            );
+            if (CameraCinematic.Value)
+            {
+                CameraSize.Value = Mathf.Lerp(CameraSize.Value, 20f, Time.deltaTime * 0.8f);
 
-            CameraPosition.Value = Vector3.Lerp(
-                CameraPosition.Value,
-                CameraPositionTarget.Value,
-                Time.deltaTime * 3f
-            );
+                CameraPosition.Value = CameraPosition.Value + new Vector3(0, 0, 9 * Time.deltaTime);
+            }
+            else
+            {
+                CameraSize.Value = Mathf.Lerp(
+                    CameraSize.Value,
+                    CameraSizeTarget.Value,
+                    Time.deltaTime * 3f
+                );
+
+                CameraPosition.Value = Vector3.Lerp(
+                    CameraPosition.Value,
+                    CameraPositionTarget.Value,
+                    Time.deltaTime * 3f
+                );
+            }
         }
     }
 }

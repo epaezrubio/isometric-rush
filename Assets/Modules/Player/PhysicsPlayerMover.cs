@@ -107,5 +107,17 @@ namespace IsoRush.Player
         {
             _ragDoll = false;
         }
+
+        public void EnablePhysics()
+        {
+            _rb.isKinematic = false;
+            _rb.useGravity = true;
+        }
+
+        public void DisablePhysics()
+        {
+            _rb.isKinematic = true;
+            _rb.useGravity = false;
+        }
     }
 }
